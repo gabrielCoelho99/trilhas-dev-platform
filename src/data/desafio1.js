@@ -1,0 +1,170 @@
+export const aulasDesafio1 = [
+  {
+    id: 1, titulo: 'Variáveis e Tipos de Dados',
+    conteudo: [
+      { tipo: 'h2', texto: 'O que são Variáveis?' },
+      { tipo: 'p', texto: 'Variáveis são **caixas nomeadas** que guardam valores na memória do computador. Você dá um nome para a caixa e coloca um valor dentro.' },
+      { tipo: 'code', lang: 'javascript', texto: '// Declarando variáveis\nlet nome = "Gabriel";       // texto (string)\nlet idade = 22;             // número inteiro\nlet altura = 1.75;          // número decimal\nlet estudante = true;       // verdadeiro ou falso (boolean)\nlet emprego = null;         // valor vazio intencional\nlet cidade;                 // undefined (não foi atribuído)\n\nconsole.log(nome);    // "Gabriel"\nconsole.log(idade);   // 22\nconsole.log(cidade);  // undefined' },
+      { tipo: 'h2', texto: 'let vs const vs var' },
+      { tipo: 'table', headers: ['Palavra', 'Pode reatribuir?', 'Escopo', 'Quando usar'], rows: [
+        ['`let`', 'Sim', 'Bloco `{}`', 'Valor que vai mudar'],
+        ['`const`', 'Não', 'Bloco `{}`', 'Valor fixo (preferido!)'],
+        ['`var`', 'Sim', 'Função', 'Evitar! (legado)'],
+      ]},
+      { tipo: 'code', lang: 'javascript', texto: 'const PI = 3.14159;       // Nunca muda → use const\nlet contador = 0;         // Vai mudar → use let\ncontador = 1;             // ✅ OK\n// PI = 3;                // ❌ ERRO! const não pode ser reatribuído' },
+      { tipo: 'callout', variante: 'tip', texto: '**Regra de ouro:** use `const` por padrão. Só use `let` quando precisar reatribuir o valor. Nunca use `var`.' },
+      { tipo: 'h2', texto: 'Tipos de Dados (Primitivos)' },
+      { tipo: 'table', headers: ['Tipo', 'Exemplo', 'typeof'], rows: [
+        ['String', '`"Olá"`, `\'Mundo\'`, `` `template` ``', '`"string"`'],
+        ['Number', '`42`, `3.14`, `-7`', '`"number"`'],
+        ['Boolean', '`true`, `false`', '`"boolean"`'],
+        ['Undefined', '`undefined`', '`"undefined"`'],
+        ['Null', '`null`', '`"object"` (bug histórico!)'],
+      ]},
+      { tipo: 'code', lang: 'javascript', texto: '// Verificando o tipo com typeof\nconsole.log(typeof "Olá");     // "string"\nconsole.log(typeof 42);        // "number"\nconsole.log(typeof true);      // "boolean"\nconsole.log(typeof undefined); // "undefined"' },
+      { tipo: 'h2', texto: 'Template Literals (Interpolação)' },
+      { tipo: 'p', texto: 'Template literals usam crases (`` ` ``) e permitem inserir variáveis dentro do texto com `${}`.:' },
+      { tipo: 'code', lang: 'javascript', texto: 'let nome = "Gabriel";\nlet idade = 22;\n\n// ❌ Forma antiga (concatenação)\nconsole.log("Olá, " + nome + "! Você tem " + idade + " anos.");\n\n// ✅ Template literal (muito melhor!)\nconsole.log(`Olá, ${nome}! Você tem ${idade} anos.`);\n\n// Pode fazer cálculos dentro\nconsole.log(`Ano que vem terá ${idade + 1} anos.`);' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Crie variáveis para nome, idade, cidade e profissão. Imprima tudo com template literal\n2. Use `typeof` para verificar o tipo de 5 valores diferentes\n3. Tente reatribuir uma `const` e veja o erro' },
+    ]
+  },
+  {
+    id: 2, titulo: 'Operadores Aritméticos e Lógicos',
+    conteudo: [
+      { tipo: 'h2', texto: 'Operadores Aritméticos' },
+      { tipo: 'table', headers: ['Operador', 'O que faz', 'Exemplo', 'Resultado'], rows: [
+        ['`+`', 'Soma', '`5 + 3`', '`8`'],
+        ['`-`', 'Subtração', '`10 - 4`', '`6`'],
+        ['`*`', 'Multiplicação', '`6 * 7`', '`42`'],
+        ['`/`', 'Divisão', '`15 / 4`', '`3.75`'],
+        ['`%`', 'Resto (módulo)', '`10 % 3`', '`1`'],
+        ['`**`', 'Potência', '`2 ** 3`', '`8`'],
+      ]},
+      { tipo: 'code', lang: 'javascript', texto: '// O operador % (módulo) é muito útil!\n// Saber se é par ou ímpar:\nconsole.log(10 % 2);  // 0 → PAR\nconsole.log(7 % 2);   // 1 → ÍMPAR\n\n// Operadores de atribuição compostos\nlet x = 10;\nx += 5;   // x = x + 5 → 15\nx -= 3;   // x = x - 3 → 12\nx *= 2;   // x = x * 2 → 24\nx /= 4;   // x = x / 4 → 6\nx++;      // x = x + 1 → 7 (incremento)\nx--;      // x = x - 1 → 6 (decremento)' },
+      { tipo: 'h2', texto: 'Operadores de Comparação' },
+      { tipo: 'table', headers: ['Operador', 'Significado', 'Exemplo', 'Resultado'], rows: [
+        ['`===`', 'Igual (estrito)', '`5 === 5`', '`true`'],
+        ['`!==`', 'Diferente (estrito)', '`5 !== "5"`', '`true`'],
+        ['`>`', 'Maior que', '`10 > 5`', '`true`'],
+        ['`<`', 'Menor que', '`3 < 7`', '`true`'],
+        ['`>=`', 'Maior ou igual', '`5 >= 5`', '`true`'],
+        ['`<=`', 'Menor ou igual', '`4 <= 3`', '`false`'],
+      ]},
+      { tipo: 'callout', variante: 'warning', texto: '**Sempre use `===` (3 iguais)!** O `==` (2 iguais) faz conversão de tipo e pode dar resultados inesperados: `"5" == 5` é `true`, mas `"5" === 5` é `false`.' },
+      { tipo: 'h2', texto: 'Operadores Lógicos' },
+      { tipo: 'code', lang: 'javascript', texto: '// && (AND) — ambos devem ser true\nconsole.log(true && true);   // true\nconsole.log(true && false);  // false\n\n// || (OR) — pelo menos um deve ser true\nconsole.log(true || false);  // true\nconsole.log(false || false); // false\n\n// ! (NOT) — inverte o valor\nconsole.log(!true);   // false\nconsole.log(!false);  // true' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Calcule a área de um retângulo (base × altura)\n2. Use `%` para verificar se 3 números são pares ou ímpares\n3. Compare valores com `===` e `==` e veja a diferença' },
+    ]
+  },
+  {
+    id: 3, titulo: 'Estruturas Condicionais (if/else, switch)',
+    conteudo: [
+      { tipo: 'h2', texto: 'if / else — Tomando Decisões' },
+      { tipo: 'code', lang: 'javascript', texto: 'let nota = 7;\n\nif (nota >= 7) {\n    console.log("Aprovado! ✅");\n} else if (nota >= 5) {\n    console.log("Recuperação 📝");\n} else {\n    console.log("Reprovado ❌");\n}' },
+      { tipo: 'h2', texto: 'Operador Ternário' },
+      { tipo: 'p', texto: 'Uma forma curta de escrever `if/else` simples:' },
+      { tipo: 'code', lang: 'javascript', texto: 'let idade = 20;\nlet status = idade >= 18 ? "Maior de idade" : "Menor de idade";\nconsole.log(status);  // "Maior de idade"\n\n// É o mesmo que:\n// if (idade >= 18) { status = "Maior de idade"; }\n// else { status = "Menor de idade"; }' },
+      { tipo: 'h2', texto: 'switch — Múltiplas Opções' },
+      { tipo: 'p', texto: 'Quando tem muitas opções, `switch` pode ser mais limpo que vários `if/else if`:' },
+      { tipo: 'code', lang: 'javascript', texto: 'let diaSemana = 3;\n\nswitch (diaSemana) {\n    case 1:\n        console.log("Segunda-feira");\n        break;\n    case 2:\n        console.log("Terça-feira");\n        break;\n    case 3:\n        console.log("Quarta-feira");\n        break;\n    case 4:\n        console.log("Quinta-feira");\n        break;\n    case 5:\n        console.log("Sexta-feira");\n        break;\n    case 6:\n    case 7:\n        console.log("Final de semana! 🎉");\n        break;\n    default:\n        console.log("Dia inválido");\n}' },
+      { tipo: 'callout', variante: 'tip', texto: '**Não esqueça o `break`!** Sem ele, o código continua executando os cases seguintes (isso se chama "fall-through").' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Classificador de notas (A, B, C, D, F)\n2. Calculadora simples usando switch (+, -, ×, ÷)\n3. Verificador de idade para CNH (>= 18 anos)' },
+    ]
+  },
+  {
+    id: 4, titulo: 'Estruturas de Repetição (for, while)',
+    conteudo: [
+      { tipo: 'h2', texto: 'Loop for' },
+      { tipo: 'code', lang: 'javascript', texto: 'for (let i = 1; i <= 5; i++) {\n    console.log(`Contagem: ${i}`);\n}\n// 1, 2, 3, 4, 5\n\n// Contagem regressiva\nfor (let i = 10; i >= 1; i--) {\n    console.log(i);\n}\nconsole.log("🚀 Lançamento!");' },
+      { tipo: 'h2', texto: 'Loop while' },
+      { tipo: 'code', lang: 'javascript', texto: '// while — repete ENQUANTO a condição for verdadeira\nlet tentativas = 0;\nlet dado;\n\nwhile (dado !== 6) {\n    dado = Math.floor(Math.random() * 6) + 1;\n    tentativas++;\n}\nconsole.log(`Tirou 6 em ${tentativas} tentativas!`);' },
+      { tipo: 'h2', texto: 'do...while' },
+      { tipo: 'p', texto: 'Executa **pelo menos uma vez**, depois verifica a condição:' },
+      { tipo: 'code', lang: 'javascript', texto: 'let numero;\ndo {\n    numero = Math.floor(Math.random() * 10) + 1;\n    console.log(`Número: ${numero}`);\n} while (numero !== 7);\nconsole.log("Encontrou o 7!");' },
+      { tipo: 'h2', texto: 'break e continue' },
+      { tipo: 'code', lang: 'javascript', texto: '// break — sai do loop imediatamente\nfor (let i = 1; i <= 100; i++) {\n    if (i === 5) break;\n    console.log(i);  // 1, 2, 3, 4\n}\n\n// continue — pula para a próxima iteração\nfor (let i = 1; i <= 5; i++) {\n    if (i === 3) continue;\n    console.log(i);  // 1, 2, 4, 5 (pulou o 3)\n}' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Imprima a tabuada de um número\n2. Imprima só os números pares de 1 a 50\n3. Some todos os números de 1 a 1000\n4. Faça uma contagem regressiva de 100 a 0, pulando de 5 em 5' },
+    ]
+  },
+  {
+    id: 5, titulo: 'Arrays — Listas de Dados',
+    conteudo: [
+      { tipo: 'h2', texto: 'Criando e Acessando Arrays' },
+      { tipo: 'code', lang: 'javascript', texto: 'let frutas = ["Maçã", "Banana", "Laranja"];\n\nconsole.log(frutas[0]);      // "Maçã" (primeiro)\nconsole.log(frutas[2]);      // "Laranja" (terceiro)\nconsole.log(frutas.length);  // 3' },
+      { tipo: 'h2', texto: 'Métodos Essenciais' },
+      { tipo: 'code', lang: 'javascript', texto: 'let lista = [1, 2, 3];\n\nlista.push(4);         // Adiciona no final → [1, 2, 3, 4]\nlista.pop();           // Remove do final → [1, 2, 3]\nlista.unshift(0);      // Adiciona no início → [0, 1, 2, 3]\nlista.shift();         // Remove do início → [1, 2, 3]\nlista.includes(2);     // true\nlista.indexOf(3);      // 2\nlista.splice(1, 1);    // Remove 1 item na posição 1 → [1, 3]' },
+      { tipo: 'h2', texto: 'Percorrendo Arrays' },
+      { tipo: 'code', lang: 'javascript', texto: 'let cores = ["vermelho", "azul", "verde"];\n\n// for clássico\nfor (let i = 0; i < cores.length; i++) {\n    console.log(`${i}: ${cores[i]}`);\n}\n\n// for...of (mais simples)\nfor (let cor of cores) {\n    console.log(cor);\n}\n\n// forEach\ncores.forEach((cor, i) => console.log(`${i}: ${cor}`));' },
+      { tipo: 'h2', texto: 'Ordenação' },
+      { tipo: 'code', lang: 'javascript', texto: 'let numeros = [5, 2, 8, 1, 9];\n\n// Ordenar números (precisa de função comparadora!)\nnumeros.sort((a, b) => a - b);\nconsole.log(numeros);  // [1, 2, 5, 8, 9]\n\n// Ordenar strings (funciona direto)\nlet nomes = ["Carlos", "Ana", "Bruno"];\nnomes.sort();\nconsole.log(nomes);  // ["Ana", "Bruno", "Carlos"]' },
+      { tipo: 'callout', variante: 'warning', texto: '**Cuidado:** `.sort()` sem função comparadora ordena como texto! `[10, 2, 1].sort()` resulta em `[1, 10, 2]` (errado). Sempre use `.sort((a, b) => a - b)` para números.' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Crie um array de 7 números e encontre o maior e o menor\n2. Ordene um array de idades e mostre o resultado\n3. Filtre só os números primos de um array' },
+    ]
+  },
+  {
+    id: 6, titulo: 'Funções — Blocos Reutilizáveis',
+    conteudo: [
+      { tipo: 'h2', texto: 'Declarando Funções' },
+      { tipo: 'code', lang: 'javascript', texto: '// Função declarada\nfunction saudacao(nome) {\n    return `Olá, ${nome}!`;\n}\n\nconsole.log(saudacao("Gabriel")); // "Olá, Gabriel!"\n\n// Função com múltiplos parâmetros\nfunction soma(a, b) {\n    return a + b;\n}\n\nconsole.log(soma(5, 3));  // 8' },
+      { tipo: 'h2', texto: 'Parâmetros com Valor Padrão' },
+      { tipo: 'code', lang: 'javascript', texto: 'function saudacao(nome = "visitante") {\n    return `Olá, ${nome}!`;\n}\n\nconsole.log(saudacao());          // "Olá, visitante!"\nconsole.log(saudacao("Gabriel")); // "Olá, Gabriel!"' },
+      { tipo: 'h2', texto: 'Funções como Expressão' },
+      { tipo: 'code', lang: 'javascript', texto: '// Function expression\nconst dobro = function(n) {\n    return n * 2;\n};\n\n// Arrow function (forma curta)\nconst triplo = (n) => n * 3;\n\nconsole.log(dobro(5));   // 10\nconsole.log(triplo(5));  // 15' },
+      { tipo: 'h2', texto: 'Exemplo: Calculadora de Fatorial' },
+      { tipo: 'code', lang: 'javascript', texto: 'function calcularFatorial(n) {\n    if (n < 0) return "Número deve ser positivo!";\n    if (n === 0) return 1;\n\n    let resultado = 1;\n    for (let i = n; i >= 1; i--) {\n        resultado *= i;\n    }\n    return resultado;\n}\n\nconsole.log(calcularFatorial(5));  // 120 (5×4×3×2×1)\nconsole.log(calcularFatorial(0));  // 1' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Crie uma função que verifica se um número é primo\n2. Crie uma função que inverte uma string\n3. Crie uma função que conte quantas vogais tem uma frase' },
+    ]
+  },
+  {
+    id: 7, titulo: 'Strings — Manipulação de Texto',
+    conteudo: [
+      { tipo: 'h2', texto: 'Métodos de String' },
+      { tipo: 'code', lang: 'javascript', texto: 'let frase = "JavaScript é incrível!";\n\nconsole.log(frase.length);               // 22\nconsole.log(frase.toUpperCase());        // "JAVASCRIPT É INCRÍVEL!"\nconsole.log(frase.toLowerCase());        // "javascript é incrível!"\nconsole.log(frase.includes("Script"));   // true\nconsole.log(frase.indexOf("é"));         // 11\nconsole.log(frase.replace("incrível", "demais")); // "JavaScript é demais!"' },
+      { tipo: 'h2', texto: 'Dividir e Juntar' },
+      { tipo: 'code', lang: 'javascript', texto: '// split — divide string em array\nlet csv = "Gabriel,22,São Luís";\nlet dados = csv.split(",");\nconsole.log(dados);  // ["Gabriel", "22", "São Luís"]\n\n// join — junta array em string\nlet palavras = ["Eu", "amo", "JavaScript"];\nlet frase = palavras.join(" ");\nconsole.log(frase);  // "Eu amo JavaScript"' },
+      { tipo: 'h2', texto: 'Extraindo Partes' },
+      { tipo: 'code', lang: 'javascript', texto: 'let texto = "Aprendendo JavaScript";\n\nconsole.log(texto.substring(0, 11));  // "Aprendendo "\nconsole.log(texto.slice(-10));        // "JavaScript"\nconsole.log(texto.charAt(0));         // "A"\nconsole.log(texto.trim());            // Remove espaços extras' },
+      { tipo: 'h2', texto: 'Exemplo: Contar Letras Maiúsculas' },
+      { tipo: 'code', lang: 'javascript', texto: 'function contarMaiusculas(texto) {\n    let contador = 0;\n    for (let char of texto) {\n        if (char !== char.toLowerCase() && char !== char.toUpperCase()) {\n            // Não é uma letra\n        } else if (char === char.toUpperCase() && char !== char.toLowerCase()) {\n            contador++;\n        }\n    }\n    return contador;\n}\n\nconsole.log(contarMaiusculas("JavaScript É Top"));  // 3 (J, S, É, T)' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Conte os caracteres de uma frase (sem espaços)\n2. Verifique se uma palavra é palíndromo\n3. Capitalize a primeira letra de cada palavra' },
+    ]
+  },
+  {
+    id: 8, titulo: 'Objeto Date e Datas',
+    conteudo: [
+      { tipo: 'h2', texto: 'Trabalhando com Datas' },
+      { tipo: 'code', lang: 'javascript', texto: 'const agora = new Date();\n\nconsole.log(agora);                    // Data e hora atuais\nconsole.log(agora.getFullYear());      // 2024\nconsole.log(agora.getMonth());         // 0-11 (Janeiro = 0!)\nconsole.log(agora.getDate());          // Dia do mês\nconsole.log(agora.getDay());           // Dia da semana (0 = Domingo)\nconsole.log(agora.getHours());         // Hora\nconsole.log(agora.getMinutes());       // Minutos' },
+      { tipo: 'callout', variante: 'warning', texto: '**Atenção:** `getMonth()` retorna de 0 a 11! Janeiro é 0, fevereiro é 1... Dezembro é 11. Sempre some +1 para exibir.' },
+      { tipo: 'h2', texto: 'Criando Datas Específicas' },
+      { tipo: 'code', lang: 'javascript', texto: 'const natal = new Date(2024, 11, 25);  // Mês 11 = Dezembro\nconst aniversario = new Date("1998-05-15");  // String ISO\n\nconsole.log(natal.toLocaleDateString("pt-BR"));\n// "25/12/2024"' },
+      { tipo: 'h2', texto: 'Calculando Idade' },
+      { tipo: 'code', lang: 'javascript', texto: 'function calcularIdade(dataNascimento) {\n    const hoje = new Date();\n    const nascimento = new Date(dataNascimento);\n    let idade = hoje.getFullYear() - nascimento.getFullYear();\n    const mes = hoje.getMonth() - nascimento.getMonth();\n\n    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {\n        idade--;\n    }\n    return idade;\n}\n\nconsole.log(calcularIdade("2002-03-15"));  // Sua idade' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Exiba a data atual formatada: "15 de março de 2024"\n2. Calcule quantos dias faltam para o Natal\n3. Crie uma função que calcula a idade a partir de uma data de nascimento' },
+    ]
+  },
+  {
+    id: 9, titulo: 'Entrada e Saída de Dados (I/O)',
+    conteudo: [
+      { tipo: 'h2', texto: 'Saída: console.log()' },
+      { tipo: 'code', lang: 'javascript', texto: '// Tipos de console\nconsole.log("Mensagem normal");          // Log padrão\nconsole.warn("⚠️ Atenção!");             // Aviso (amarelo)\nconsole.error("❌ Erro encontrado!");     // Erro (vermelho)\nconsole.table([{nome: "A", nota: 10}]);  // Tabela formatada' },
+      { tipo: 'h2', texto: 'Entrada: readline (Node.js)' },
+      { tipo: 'code', lang: 'javascript', texto: 'const readline = require("readline");\n\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nrl.question("Qual seu nome? ", (nome) => {\n    console.log(`Olá, ${nome}!`);\n    rl.close();\n});' },
+      { tipo: 'h2', texto: 'Entrada Simplificada: readline-sync' },
+      { tipo: 'p', texto: 'O pacote `readline-sync` é mais simples para entrada de dados:' },
+      { tipo: 'code', lang: 'javascript', texto: '// npm install readline-sync\nconst readlineSync = require("readline-sync");\n\nconst nome = readlineSync.question("Seu nome: ");\nconst idade = readlineSync.questionInt("Sua idade: ");\n\nconsole.log(`${nome} tem ${idade} anos!`);' },
+      { tipo: 'h2', texto: 'Prompt e Alert (Navegador)' },
+      { tipo: 'p', texto: 'No navegador, usamos `prompt()` para entrada e `alert()` para saída:' },
+      { tipo: 'code', lang: 'javascript', texto: '// Só funciona no navegador!\nlet nome = prompt("Qual seu nome?");\nalert(`Olá, ${nome}!`);\n\n// parseInt converte string para número inteiro\nlet idadeStr = prompt("Sua idade?");\nlet idade = parseInt(idadeStr);' },
+      { tipo: 'h2', texto: '🏋️ Exercícios' },
+      { tipo: 'p', texto: '1. Crie um programa que pede nome e idade e calcula o ano de nascimento\n2. Faça uma calculadora que pede 2 números e a operação\n3. Crie um quiz de perguntas e respostas com pontuação' },
+    ]
+  },
+];
