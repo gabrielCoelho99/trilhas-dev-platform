@@ -10,7 +10,8 @@ import { aulasDesafio2 } from '@/data/desafio2';
 import { aulasDesafio3 } from '@/data/desafio3';
 import { aulasDesafio4 } from '@/data/desafio4';
 import { aulasDesafio5 } from '@/data/desafio5';
-import { isCompleted, toggleComplete } from '@/lib/progress';
+import { isCompletedAsync, toggleCompleteAsync } from '@/lib/progress';
+import { useAuth } from '@/components/AuthProvider';
 import LessonContent from '@/components/LessonContent';
 
 const conteudoMap = {
@@ -33,6 +34,7 @@ export default function AulaPage({ params }) {
   const slug = resolvedParams.slug;
   const aulaId = parseInt(resolvedParams.aulaId);
   const desafio = getDesafio(slug);
+  const { user, loading: authLoading } = useAuth();
   const [completed, setCompleted] = useState(false);
 
   const allAulas = slug === 'extra-logica'
@@ -47,11 +49,15 @@ export default function AulaPage({ params }) {
   const currentAula = allAulas[currentIndex];
 
   useEffect(() => {
-    setCompleted(isCompleted(slug, aulaId));
-  }, [slug, aulaId]);
+    if (authLoading) return;
+    const load = async () => {
+      setCompleted(await isCompletedAsync(slug, aulaId));
+    };
+    load();
+  }, [slug, aulaId, authLoading, user]);
 
-  const handleToggle = () => {
-    const newState = toggleComplete(slug, aulaId);
+  const handleToggle = async () => {
+    const newState = await toggleCompleteAsync(slug, aulaId);
     setCompleted(newState);
   };
 

@@ -2,29 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { desafios } from '@/data/desafios';
 import { aulasMap } from '@/data/aulas';
 import { aulasExtraLogica } from '@/data/desafioExtra';
-import { isCompleted, getTotalProgress } from '@/lib/progress';
+import { getTotalProgressAsync, isCompletedAsync } from '@/lib/progress';
+import { useAuth } from '@/components/AuthProvider';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, signOut, loading: authLoading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [progress, setProgress] = useState({ completed: 0, total: 52, percentage: 0 });
-
-  useEffect(() => {
-    setProgress(getTotalProgress(desafios));
-
-    // Expand current desafio
-    for (const d of desafios) {
-      if (pathname.includes(d.slug)) {
-        setExpanded(d.slug);
-        break;
-      }
-    }
-  }, [pathname]);
+  const [completedMap, setCompletedMap] = useState({});
+  const isLoginPage = pathname === '/login';
 
   const getAulasFor = (slug) => {
     if (slug === 'extra-logica') {
@@ -33,9 +26,52 @@ export default function Sidebar() {
     return aulasMap[slug] || [];
   };
 
+  useEffect(() => {
+    if (authLoading || isLoginPage) return;
+
+    const loadProgress = async () => {
+      const p = await getTotalProgressAsync();
+      setProgress(p);
+    };
+    loadProgress();
+
+    // Expand current desafio
+    for (const d of desafios) {
+      if (pathname.includes(d.slug)) {
+        setExpanded(d.slug);
+        break;
+      }
+    }
+  }, [pathname, authLoading, user, isLoginPage]);
+
+  useEffect(() => {
+    if (authLoading || !expanded || isLoginPage) return;
+
+    const loadCompleted = async () => {
+      const aulas = getAulasFor(expanded);
+      const map = {};
+      for (const aula of aulas) {
+        map[`${expanded}-${aula.id}`] = await isCompletedAsync(expanded, aula.id);
+      }
+      setCompletedMap(prev => ({ ...prev, ...map }));
+    };
+    loadCompleted();
+  }, [expanded, authLoading, user, isLoginPage]);
+
+  // Don't render sidebar on login page
+  if (isLoginPage) return null;
+
   const toggleExpand = (slug) => {
     setExpanded(expanded === slug ? null : slug);
   };
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/login');
+    router.refresh();
+  };
+
+  const userName = user?.user_metadata?.nome || user?.email?.split('@')[0] || 'Usuário';
 
   return (
     <>
@@ -64,6 +100,21 @@ export default function Sidebar() {
             </div>
           </Link>
         </div>
+
+        {/* User Info */}
+        {user && (
+          <div className="sidebar-user">
+            <div className="sidebar-user-avatar">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            <div className="sidebar-user-info">
+              <div className="sidebar-user-name">{userName}</div>
+              <button className="sidebar-logout-btn" onClick={handleSignOut}>
+                Sair
+              </button>
+            </div>
+          </div>
+        )}
 
         <nav className="sidebar-nav">
           {desafios.map((desafio) => {
@@ -98,7 +149,7 @@ export default function Sidebar() {
                       </Link>
                     </li>
                     {aulas.map((aula) => {
-                      const completed = isCompleted(desafio.slug, aula.id);
+                      const completed = completedMap[`${desafio.slug}-${aula.id}`];
                       const aulaPath = `/desafio/${desafio.slug}/aula/${aula.id}`;
                       return (
                         <li key={aula.id}>

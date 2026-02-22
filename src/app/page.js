@@ -3,20 +3,27 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { desafios } from '@/data/desafios';
-import { getDesafioProgress, getTotalProgress } from '@/lib/progress';
+import { getDesafioProgressAsync, getTotalProgressAsync } from '@/lib/progress';
+import { useAuth } from '@/components/AuthProvider';
 
 export default function Home() {
+  const { user, loading: authLoading } = useAuth();
   const [totalProgress, setTotalProgress] = useState({ completed: 0, total: 52, percentage: 0 });
   const [desafioProgress, setDesafioProgress] = useState({});
 
   useEffect(() => {
-    setTotalProgress(getTotalProgress(desafios));
-    const progMap = {};
-    for (const d of desafios) {
-      progMap[d.slug] = getDesafioProgress(d.slug, d.totalAulas);
-    }
-    setDesafioProgress(progMap);
-  }, []);
+    if (authLoading) return;
+
+    const loadProgress = async () => {
+      setTotalProgress(await getTotalProgressAsync());
+      const progMap = {};
+      for (const d of desafios) {
+        progMap[d.slug] = await getDesafioProgressAsync(d.slug, d.totalAulas);
+      }
+      setDesafioProgress(progMap);
+    };
+    loadProgress();
+  }, [authLoading, user]);
 
   return (
     <>

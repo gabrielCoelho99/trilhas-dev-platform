@@ -5,23 +5,34 @@ import Link from 'next/link';
 import { getDesafio } from '@/data/desafios';
 import { aulasMap } from '@/data/aulas';
 import { aulasExtraLogica } from '@/data/desafioExtra';
-import { getDesafioProgress, isCompleted } from '@/lib/progress';
+import { getDesafioProgressAsync, isCompletedAsync } from '@/lib/progress';
+import { useAuth } from '@/components/AuthProvider';
 
 export default function DesafioPage({ params }) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
   const desafio = getDesafio(slug);
+  const { user, loading: authLoading } = useAuth();
   const [progress, setProgress] = useState({ completed: 0, total: 0, percentage: 0 });
+  const [completedMap, setCompletedMap] = useState({});
 
   const aulas = slug === 'extra-logica'
     ? aulasExtraLogica.map(a => ({ id: a.id, titulo: a.titulo }))
     : (aulasMap[slug] || []);
 
   useEffect(() => {
-    if (desafio) {
-      setProgress(getDesafioProgress(slug, desafio.totalAulas));
-    }
-  }, [slug, desafio]);
+    if (authLoading || !desafio) return;
+
+    const load = async () => {
+      setProgress(await getDesafioProgressAsync(slug, desafio.totalAulas));
+      const map = {};
+      for (const aula of aulas) {
+        map[aula.id] = await isCompletedAsync(slug, aula.id);
+      }
+      setCompletedMap(map);
+    };
+    load();
+  }, [slug, desafio, authLoading, user]);
 
   if (!desafio) {
     return (
@@ -49,7 +60,7 @@ export default function DesafioPage({ params }) {
 
       <div className="aula-list">
         {aulas.map((aula) => {
-          const completed = isCompleted(slug, aula.id);
+          const completed = completedMap[aula.id] || false;
           return (
             <Link
               key={aula.id}
