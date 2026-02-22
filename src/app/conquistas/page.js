@@ -13,7 +13,8 @@ export default function ConquistasPage() {
   useEffect(() => {
     if (loading) return;
     const loadData = async () => {
-      const totalCompleted = await getTotalProgressAsync();
+      const progressData = await getTotalProgressAsync();
+      const totalCompleted = progressData.completed;
       setStats({ totalCompleted });
 
       // Determine which badges are unlocked based on progress
