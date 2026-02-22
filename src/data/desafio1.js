@@ -13,6 +13,7 @@ export const aulasDesafio1 = [
       ]},
       { tipo: 'code', lang: 'javascript', texto: 'const PI = 3.14159;       // Nunca muda → use const\nlet contador = 0;         // Vai mudar → use let\ncontador = 1;             // ✅ OK\n// PI = 3;                // ❌ ERRO! const não pode ser reatribuído' },
       { tipo: 'callout', variante: 'tip', texto: '**Regra de ouro:** use `const` por padrão. Só use `let` quando precisar reatribuir o valor. Nunca use `var`.' },
+      { tipo: 'dica', texto: 'Iniciantes confundem `=` (atribuição) com `===` (comparação). `let x = 5` coloca 5 dentro de x. `x === 5` pergunta se x é igual a 5.' },
       { tipo: 'h2', texto: 'Tipos de Dados (Primitivos)' },
       { tipo: 'table', headers: ['Tipo', 'Exemplo', 'typeof'], rows: [
         ['String', '`"Olá"`, `\'Mundo\'`, `` `template` ``', '`"string"`'],
@@ -27,6 +28,11 @@ export const aulasDesafio1 = [
       { tipo: 'code', lang: 'javascript', texto: 'let nome = "Gabriel";\nlet idade = 22;\n\n// ❌ Forma antiga (concatenação)\nconsole.log("Olá, " + nome + "! Você tem " + idade + " anos.");\n\n// ✅ Template literal (muito melhor!)\nconsole.log(`Olá, ${nome}! Você tem ${idade} anos.`);\n\n// Pode fazer cálculos dentro\nconsole.log(`Ano que vem terá ${idade + 1} anos.`);' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Crie variáveis para nome, idade, cidade e profissão. Imprima tudo com template literal\n2. Use `typeof` para verificar o tipo de 5 valores diferentes\n3. Tente reatribuir uma `const` e veja o erro' },
+    ],
+    quiz: [
+      { pergunta: 'Qual palavra-chave NÃO permite reatribuição?', opcoes: ['let', 'var', 'const', 'function'], correta: 2, explicacao: 'const declara uma constante — seu valor não pode ser reatribuído após a inicialização.' },
+      { pergunta: 'Qual é o resultado de typeof null?', opcoes: ['"null"', '"undefined"', '"object"', '"boolean"'], correta: 2, explicacao: 'typeof null retorna "object" — é um bug histórico do JavaScript que nunca foi corrigido.' },
+      { pergunta: 'O que são Template Literals?', opcoes: ['Strings com aspas simples', 'Strings com aspas duplas', 'Strings com crases e interpolação ${}', 'Strings numéricas'], correta: 2, explicacao: 'Template literals usam crases (`) e permitem inserir variáveis com ${variavel}.' },
     ]
   },
   {
@@ -54,8 +60,14 @@ export const aulasDesafio1 = [
       { tipo: 'callout', variante: 'warning', texto: '**Sempre use `===` (3 iguais)!** O `==` (2 iguais) faz conversão de tipo e pode dar resultados inesperados: `"5" == 5` é `true`, mas `"5" === 5` é `false`.' },
       { tipo: 'h2', texto: 'Operadores Lógicos' },
       { tipo: 'code', lang: 'javascript', texto: '// && (AND) — ambos devem ser true\nconsole.log(true && true);   // true\nconsole.log(true && false);  // false\n\n// || (OR) — pelo menos um deve ser true\nconsole.log(true || false);  // true\nconsole.log(false || false); // false\n\n// ! (NOT) — inverte o valor\nconsole.log(!true);   // false\nconsole.log(!false);  // true' },
+      { tipo: 'dica', texto: 'O erro mais comum com operadores é confundir `=` com `==` ou `===`. Lembre: um `=` é atribuição, dois `==` é comparação fraca, três `===` é comparação estrita (sempre use esta!).' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Calcule a área de um retângulo (base × altura)\n2. Use `%` para verificar se 3 números são pares ou ímpares\n3. Compare valores com `===` e `==` e veja a diferença' },
+    ],
+    quiz: [
+      { pergunta: 'Qual é o resultado de 10 % 3?', opcoes: ['3', '3.33', '1', '0'], correta: 2, explicacao: 'O operador % (módulo) retorna o RESTO da divisão. 10 ÷ 3 = 3 com resto 1.' },
+      { pergunta: 'Por que devemos usar === ao invés de ==?', opcoes: ['É mais rápido', 'Evita conversão de tipo inesperada', 'É obrigatório', 'Não há diferença'], correta: 1, explicacao: '=== compara valor E tipo, enquanto == pode converter tipos automaticamente, causando bugs.' },
+      { pergunta: 'O que x++ faz?', opcoes: ['Multiplica x por 2', 'Soma 2 a x', 'Incrementa x em 1', 'Cria uma cópia de x'], correta: 2, explicacao: 'x++ é o operador de incremento — equivale a x = x + 1.' },
     ]
   },
   {
@@ -70,8 +82,14 @@ export const aulasDesafio1 = [
       { tipo: 'p', texto: 'Quando tem muitas opções, `switch` pode ser mais limpo que vários `if/else if`:' },
       { tipo: 'code', lang: 'javascript', texto: 'let diaSemana = 3;\n\nswitch (diaSemana) {\n    case 1:\n        console.log("Segunda-feira");\n        break;\n    case 2:\n        console.log("Terça-feira");\n        break;\n    case 3:\n        console.log("Quarta-feira");\n        break;\n    case 4:\n        console.log("Quinta-feira");\n        break;\n    case 5:\n        console.log("Sexta-feira");\n        break;\n    case 6:\n    case 7:\n        console.log("Final de semana! 🎉");\n        break;\n    default:\n        console.log("Dia inválido");\n}' },
       { tipo: 'callout', variante: 'tip', texto: '**Não esqueça o `break`!** Sem ele, o código continua executando os cases seguintes (isso se chama "fall-through").' },
+      { tipo: 'dica', texto: 'Esquecer as chaves {} no if é um erro clássico! Sem chaves, só a PRIMEIRA linha após o if será condicional. Sempre use chaves, mesmo para uma linha.' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Classificador de notas (A, B, C, D, F)\n2. Calculadora simples usando switch (+, -, ×, ÷)\n3. Verificador de idade para CNH (>= 18 anos)' },
+    ],
+    quiz: [
+      { pergunta: 'O que o operador ternário faz?', opcoes: ['Loop de 3 iterações', 'if/else em uma linha', 'Compara 3 valores', 'Cria 3 variáveis'], correta: 1, explicacao: 'O ternário (condição ? valorSeTrue : valorSeFalse) é uma forma curta de if/else.' },
+      { pergunta: 'O que acontece se esquecer o break no switch?', opcoes: ['Erro de sintaxe', 'Executa só o case correto', 'Cai nos cases seguintes (fall-through)', 'O programa para'], correta: 2, explicacao: 'Sem break, o código continua executando os cases seguintes — isso é chamado de fall-through.' },
+      { pergunta: 'Qual é o resultado de: if (0) { "sim" } else { "não" }?', opcoes: ['"sim"', '"não"', 'erro', 'undefined'], correta: 1, explicacao: '0 é um valor "falsy" em JavaScript, então a condição é false e executa o else.' },
     ]
   },
   {
@@ -86,8 +104,14 @@ export const aulasDesafio1 = [
       { tipo: 'code', lang: 'javascript', texto: 'let numero;\ndo {\n    numero = Math.floor(Math.random() * 10) + 1;\n    console.log(`Número: ${numero}`);\n} while (numero !== 7);\nconsole.log("Encontrou o 7!");' },
       { tipo: 'h2', texto: 'break e continue' },
       { tipo: 'code', lang: 'javascript', texto: '// break — sai do loop imediatamente\nfor (let i = 1; i <= 100; i++) {\n    if (i === 5) break;\n    console.log(i);  // 1, 2, 3, 4\n}\n\n// continue — pula para a próxima iteração\nfor (let i = 1; i <= 5; i++) {\n    if (i === 3) continue;\n    console.log(i);  // 1, 2, 4, 5 (pulou o 3)\n}' },
+      { tipo: 'dica', texto: 'Loop infinito é o pesadelo do iniciante! Sempre verifique se sua condição EVENTUALMENTE se torna false. Se usar while(true), garanta que tem um break dentro.' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Imprima a tabuada de um número\n2. Imprima só os números pares de 1 a 50\n3. Some todos os números de 1 a 1000\n4. Faça uma contagem regressiva de 100 a 0, pulando de 5 em 5' },
+    ],
+    quiz: [
+      { pergunta: 'Qual a diferença entre while e do...while?', opcoes: ['Nenhuma', 'do...while executa pelo menos 1 vez', 'while é mais rápido', 'do...while é para arrays'], correta: 1, explicacao: 'do...while executa o bloco PRIMEIRO, depois verifica a condição — garantindo pelo menos 1 execução.' },
+      { pergunta: 'O que break faz dentro de um loop?', opcoes: ['Pula para próxima iteração', 'Sai do loop imediatamente', 'Pausa por 1 segundo', 'Reinicia o loop'], correta: 1, explicacao: 'break encerra o loop imediatamente, independente da condição.' },
+      { pergunta: 'for (let i = 0; i < 5; i++) — quantas vezes executa?', opcoes: ['4 vezes', '5 vezes', '6 vezes', 'Infinito'], correta: 1, explicacao: 'Começa em 0 e vai até 4 (enquanto i < 5), totalizando 5 iterações: 0, 1, 2, 3, 4.' },
     ]
   },
   {
@@ -102,8 +126,14 @@ export const aulasDesafio1 = [
       { tipo: 'h2', texto: 'Ordenação' },
       { tipo: 'code', lang: 'javascript', texto: 'let numeros = [5, 2, 8, 1, 9];\n\n// Ordenar números (precisa de função comparadora!)\nnumeros.sort((a, b) => a - b);\nconsole.log(numeros);  // [1, 2, 5, 8, 9]\n\n// Ordenar strings (funciona direto)\nlet nomes = ["Carlos", "Ana", "Bruno"];\nnomes.sort();\nconsole.log(nomes);  // ["Ana", "Bruno", "Carlos"]' },
       { tipo: 'callout', variante: 'warning', texto: '**Cuidado:** `.sort()` sem função comparadora ordena como texto! `[10, 2, 1].sort()` resulta em `[1, 10, 2]` (errado). Sempre use `.sort((a, b) => a - b)` para números.' },
+      { tipo: 'dica', texto: 'Arrays começam no índice 0, não 1! O primeiro elemento é array[0], o segundo é array[1]. Se o array tem 5 elementos, o último é array[4], não array[5].' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Crie um array de 7 números e encontre o maior e o menor\n2. Ordene um array de idades e mostre o resultado\n3. Filtre só os números primos de um array' },
+    ],
+    quiz: [
+      { pergunta: 'Qual método adiciona um item NO FINAL do array?', opcoes: ['unshift()', 'push()', 'shift()', 'pop()'], correta: 1, explicacao: 'push() adiciona no final. unshift() adiciona no início. pop() remove do final. shift() remove do início.' },
+      { pergunta: 'O que acontece com [10, 2, 1].sort() (sem função)?', opcoes: ['[1, 2, 10]', '[10, 2, 1]', '[1, 10, 2]', 'Erro'], correta: 2, explicacao: 'Sem função comparadora, sort() ordena como TEXT — "10" vem antes de "2" alfabeticamente!' },
+      { pergunta: 'Qual é o índice do primeiro elemento de um array?', opcoes: ['1', '0', '-1', 'primeiro'], correta: 1, explicacao: 'Em JavaScript (e na maioria das linguagens), arrays são indexados a partir de 0.' },
     ]
   },
   {
@@ -117,8 +147,14 @@ export const aulasDesafio1 = [
       { tipo: 'code', lang: 'javascript', texto: '// Function expression\nconst dobro = function(n) {\n    return n * 2;\n};\n\n// Arrow function (forma curta)\nconst triplo = (n) => n * 3;\n\nconsole.log(dobro(5));   // 10\nconsole.log(triplo(5));  // 15' },
       { tipo: 'h2', texto: 'Exemplo: Calculadora de Fatorial' },
       { tipo: 'code', lang: 'javascript', texto: 'function calcularFatorial(n) {\n    if (n < 0) return "Número deve ser positivo!";\n    if (n === 0) return 1;\n\n    let resultado = 1;\n    for (let i = n; i >= 1; i--) {\n        resultado *= i;\n    }\n    return resultado;\n}\n\nconsole.log(calcularFatorial(5));  // 120 (5×4×3×2×1)\nconsole.log(calcularFatorial(0));  // 1' },
+      { tipo: 'dica', texto: 'Função sem return retorna undefined! Se sua função calcula algo mas não tem return, o resultado se perde. Sempre que a função deve devolver algo, use return.' },
       { tipo: 'h2', texto: '🏋️ Exercícios' },
       { tipo: 'p', texto: '1. Crie uma função que verifica se um número é primo\n2. Crie uma função que inverte uma string\n3. Crie uma função que conte quantas vogais tem uma frase' },
+    ],
+    quiz: [
+      { pergunta: 'Qual a diferença entre parâmetro e argumento?', opcoes: ['São a mesma coisa', 'Parâmetro é na definição, argumento na chamada', 'Argumento é na definição, parâmetro na chamada', 'Parâmetro é para números'], correta: 1, explicacao: 'Parâmetro é a variável na DEFINIÇÃO da função. Argumento é o VALOR passado na CHAMADA.' },
+      { pergunta: 'O que uma arrow function (=>) retorna automaticamente?', opcoes: ['undefined', 'null', 'A expressão após a seta (sem chaves)', 'Nada'], correta: 2, explicacao: 'Arrow functions com corpo curto (sem {}) retornam automaticamente a expressão: (n) => n * 2 retorna n*2.' },
+      { pergunta: 'function soma(a, b = 0) — o que é b = 0?', opcoes: ['Atribuição obrigatória', 'Valor padrão se b não for passado', 'Comparação', 'Erro de sintaxe'], correta: 1, explicacao: 'b = 0 é um valor padrão (default) — se a função for chamada sem o segundo argumento, b será 0.' },
     ]
   },
   {

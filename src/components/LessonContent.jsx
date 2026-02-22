@@ -1,5 +1,7 @@
 'use client';
 
+import CodeSandbox from '@/components/CodeSandbox';
+
 import CodeBlock from './CodeBlock';
 
 function renderBold(text) {
@@ -88,6 +90,26 @@ export default function LessonContent({ conteudo }) {
               </table>
             );
           
+          case 'dica':
+            return (
+              <div key={index} className="callout callout-dica">
+                <span className="callout-dica-icon">👨‍🏫</span>
+                <div>
+                  <strong>Dica do Professor</strong>
+                  <p>{renderBold(item.texto)}</p>
+                </div>
+              </div>
+            );
+
+          case 'sandbox':
+            return (
+              <CodeSandbox
+                key={index}
+                codigoInicial={item.codigo || ''}
+                instrucao={item.instrucao || ''}
+              />
+            );
+
           default:
             return null;
         }

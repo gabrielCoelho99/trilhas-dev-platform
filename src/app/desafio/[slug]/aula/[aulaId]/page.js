@@ -13,6 +13,7 @@ import { aulasDesafio5 } from '@/data/desafio5';
 import { isCompletedAsync, toggleCompleteAsync } from '@/lib/progress';
 import { useAuth } from '@/components/AuthProvider';
 import LessonContent from '@/components/LessonContent';
+import Quiz from '@/components/Quiz';
 
 const conteudoMap = {
   'extra-logica': aulasExtraLogica,
@@ -103,6 +104,11 @@ export default function AulaPage({ params }) {
             O conteúdo interativo desta aula está sendo preparado. Por enquanto, consulte o README do {desafio.numero} para o material completo desta aula.
           </div>
         </div>
+      )}
+
+      {/* Quiz */}
+      {aulaData && aulaData.quiz && aulaData.quiz.length > 0 && (
+        <Quiz quiz={aulaData.quiz} lessonKey={`${slug}-${aulaId}`} />
       )}
 
       {/* Navegação */}

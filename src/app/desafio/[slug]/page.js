@@ -7,6 +7,8 @@ import { aulasMap } from '@/data/aulas';
 import { aulasExtraLogica } from '@/data/desafioExtra';
 import { getDesafioProgressAsync, isCompletedAsync } from '@/lib/progress';
 import { useAuth } from '@/components/AuthProvider';
+import ProgressBanner from '@/components/ProgressBanner';
+import Certificate from '@/components/Certificate';
 
 export default function DesafioPage({ params }) {
   const resolvedParams = use(params);
@@ -57,6 +59,16 @@ export default function DesafioPage({ params }) {
           {progress.completed}/{progress.total} aulas concluídas • {progress.percentage}%
         </p>
       </div>
+
+      <ProgressBanner completed={progress.completed} total={progress.total} />
+
+      {progress.percentage === 100 && (
+        <Certificate
+          userName={user?.user_metadata?.nome || user?.email?.split('@')[0]}
+          desafioTitulo={desafio.titulo}
+          totalAulas={desafio.totalAulas}
+        />
+      )}
 
       <div className="aula-list">
         {aulas.map((aula) => {

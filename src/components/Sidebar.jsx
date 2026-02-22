@@ -8,11 +8,13 @@ import { aulasMap } from '@/data/aulas';
 import { aulasExtraLogica } from '@/data/desafioExtra';
 import { getTotalProgressAsync, isCompletedAsync } from '@/lib/progress';
 import { useAuth } from '@/components/AuthProvider';
+import { useTheme } from '@/components/ThemeProvider';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut, loading: authLoading } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const [progress, setProgress] = useState({ completed: 0, total: 52, percentage: 0 });
@@ -172,6 +174,18 @@ export default function Sidebar() {
             );
           })}
         </nav>
+
+        {/* Links Rápidos */}
+        <div style={{ padding: '0.5rem 1rem', borderTop: '1px solid var(--border-color)' }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>Links Rápidos</div>
+          <Link href="/mapa" className={`sidebar-lesson-link ${pathname === '/mapa' ? 'active' : ''}`} onClick={() => setMobileOpen(false)} style={{ display: 'block', padding: '0.4rem 0.5rem', fontSize: '0.85rem' }}>🗺️ Mapa da Trilha</Link>
+          <Link href="/glossario" className={`sidebar-lesson-link ${pathname === '/glossario' ? 'active' : ''}`} onClick={() => setMobileOpen(false)} style={{ display: 'block', padding: '0.4rem 0.5rem', fontSize: '0.85rem' }}>📖 Glossário</Link>
+          <Link href="/conquistas" className={`sidebar-lesson-link ${pathname === '/conquistas' ? 'active' : ''}`} onClick={() => setMobileOpen(false)} style={{ display: 'block', padding: '0.4rem 0.5rem', fontSize: '0.85rem' }}>🏆 Conquistas</Link>
+          <button className="theme-toggle" onClick={toggleTheme} style={{ width: '100%', marginTop: '0.5rem' }}>
+            <span className="theme-toggle-icon">{theme === 'dark' ? '☀️' : '🌙'}</span>
+            {theme === 'dark' ? 'Modo Claro' : 'Modo Escuro'}
+          </button>
+        </div>
 
         <div className="sidebar-progress">
           <div className="sidebar-progress-label">
